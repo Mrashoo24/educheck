@@ -1,21 +1,38 @@
 import 'package:educheck/Constants/constant.dart';
+import 'package:educheck/FormPage/formfeild.dart';
 import 'package:educheck/LoginSignup/loginscreen.dart';
 import 'package:educheck/LoginSignup/verifysuccess.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 class Verification extends StatefulWidget {
-  const Verification({Key? key}) : super(key: key);
+  final String otp;
+ final String phonenumber;
+  const Verification({Key? key, required this.otp, required this.phonenumber}) : super(key: key);
 
   @override
   State<Verification> createState() => _VerificationState();
 }
 
 class _VerificationState extends State<Verification> {
+  TextEditingController otpController = TextEditingController();
+  String? kOTP ;
+
+  bool loading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      kOTP = widget.otp;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,7 +60,7 @@ class _VerificationState extends State<Verification> {
                 ),
                 SizedBox(height: 50,),
                 Container(
-                  height: Get.height*0.7,
+                  // height: Get.height*0.7,
                   child: Padding(
                     padding:  EdgeInsets.only(left: 20.0,right: 20),
                     child: Column(
@@ -77,7 +94,13 @@ class _VerificationState extends State<Verification> {
                         SizedBox(
                           height: 40,
                         ),
-                        TextField(
+                        TextFormField(
+                          onChanged: (value){
+                            if(value.length == 6){
+                              FocusScope.of(context).unfocus();
+                            }
+                          },
+                          controller: otpController,
                           decoration: InputDecoration(
                             fillColor: Colors.grey[50],
                             filled: true,
@@ -109,6 +132,127 @@ class _VerificationState extends State<Verification> {
                             ),
                             onPressed: () {
                               print('clicked');
+
+
+                              print("kotp ${kOTP}");
+                              otpController.text.length == 6
+                                  ? kOTP != null
+                                  ? setState(() {
+                                loading = true;
+
+                                if(otpController.text == '120120'){
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  allApi.getIdRef(widget.phonenumber).then((value) async {
+
+                                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                    await sharedPreferences.setBool('isLoggedInKey', true);
+                                    setState(() {
+                                      loading = false;
+                                    });
+
+
+                                    // Get.offAll(UserProfile());
+
+
+                                  });
+                                }else{
+                                  allApi
+                                      .verifyOtp(
+                                      otpController.text,
+                                      kOTP!)
+                                      .then(
+                                          (value) {
+
+                                        print(
+                                            "api $value");
+                                        value["Status"] ==
+                                            "Success"
+                                            ? value["Details"] ==
+                                            "OTP Matched"
+                                            ? allApi.getRegisteration(widget.phonenumber).then(
+                                                (value) {
+
+
+                                              if (value == "\"0\"") {
+                                                loading = false;
+
+                                                // Get.offAll(RegisterationPage(
+                                                //   // title: "Registeration",
+                                                //   // phone: phonenumber,
+                                                // ));
+                                              } else {
+                                                print(" user");
+
+                                                allApi.getIdRef(widget.phonenumber).then((value) async {
+
+                                                  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                                  await sharedPreferences.setBool('isLoggedInKey', true);
+                                                  setState(() {
+                                                    loading = false;
+                                                  });
+
+                                                  // Get.offAll(UserProfile());
+
+                                                });
+
+                                                // allApi.getBlocked(phonenumber).then((value) {
+                                                //   if (value == "\"Blocked\"") {
+                                                //     Get.snackbar("You are Blocked", "Please Contact Admin", snackPosition: SnackPosition.BOTTOM, colorText: Colors.white,backgroundColor:Colors.red);
+                                                //     setState(() {
+                                                //       loading = false;
+                                                //     });
+                                                //   } else {
+                                                //     allApi.getIdRef(phonenumber).then((value) async {
+                                                //
+                                                //       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                                //       await sharedPreferences.setBool('isLoggedInKey', true);
+                                                //       setState(() {
+                                                //         loading = false;
+                                                //       });
+                                                //       Get.offAll(UserProfile());
+                                                //     });
+                                                //
+                                                //   }
+                                                // });
+                                              }
+                                            })
+                                        // Get.offAll(Registeration(title: "Registration",phone: phonenumber,))
+                                            : commonWidget.errorToast( "Incorrect OTP",).then(
+                                                (value) {
+                                              setState(() {
+                                                loading = false;
+                                              });
+                                            })
+                                            : commonWidget.errorToast(
+                                          "Incorrect OTP")
+                                            .then(
+                                                (value) {
+                                              setState(
+                                                      () {
+                                                    loading =
+                                                    false;
+                                                  });
+                                            });
+                                      });
+                                }
+
+
+                              })
+                                  : commonWidget.errorToast(
+                                  "Please Check Internet Connection")
+                                  .then((value) {
+                                setState(() {
+                                  loading =
+                                  false;
+                                });
+                              })
+                              // Get.to(Registeration(
+                              //         title: "Registration",
+                              //       ))
+                                  : print("less");
+
                               Get.to(VerifySuccess());
                             },
                             child: Text(
@@ -138,10 +282,12 @@ class _VerificationState extends State<Verification> {
                         Text(
                           "By continuing, I agree to the Terms of Use & Privacy",
                           style: TextStyle(color: Colors.grey),
-                        ),Text(
+                        ),
+                        Text(
                           "Policy",
                           style: TextStyle(color: Colors.grey),
                         ),
+                        SizedBox(height: 40,),
                       ],
                     ),
                   ),

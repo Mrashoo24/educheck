@@ -14,6 +14,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController phonenumber = TextEditingController();
+
+  bool loading = false;
+  String? kOTP;
+  final _formKey = GlobalKey<FormState>();
+
+  String? isLoggedInKey;
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
@@ -94,39 +101,58 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Text(
-                              "We will send One Time Password to this mobile phone",
-                              style: TextStyle(color: Colors.grey ),
-                            ),
-                          ],
+                        Text(
+                          "We will send One Time Password to this mobile phone",
+                          style: TextStyle(color: Colors.grey ),
                         ),
                         SizedBox(
                           height: 40,
                         ),
-                        TextField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey[50],
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color:ktextcolor)),
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(10),
-                              //   borderSide: BorderSide(color: ktextcolor),
-                              //
-                              // ),
-                              border: InputBorder.none,
+                        Form(
+                          key:_formKey,
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }if( value.length <10){
+                                return 'Enter correct Phone Number';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
+                            onChanged: (value){
+                             if (value.length > 9) {
+                                 setState(() {
+                                   phonenumber = TextEditingController(text: value.substring(0, 10));
+                                 }
+                                 );
+                                FocusScope.of(context).unfocus();
 
-                              hintText: ("Mobile number"),
-                              hintStyle: TextStyle(color: Colors.grey),
-                              contentPadding: EdgeInsets.all(10),
+                              }
+                            },
+                            controller: phonenumber,
+                              decoration: InputDecoration(
+                                fillColor: Colors.grey[50],
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color:ktextcolor)),
+                                // border: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(10),
+                                //   borderSide: BorderSide(color: ktextcolor),
+                                //
+                                // ),
+                                border: InputBorder.none,
+
+                                hintText: ("Mobile number"),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                contentPadding: EdgeInsets.all(10),
+                              ),
                             ),
-                          ),
+                        ),
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
+                     loading ? kprogressbar  :   Container(
                           width: Get.width,
                           height: 50,
 
@@ -137,7 +163,73 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () {
                               print('clicked');
-                              Get.to(Verification());
+
+                             if (_formKey.currentState!.validate()){
+
+                               showDialog(
+                                 context: context,
+                                 builder: (ctx) {
+                                   return AlertDialog(
+                                     title: Text(
+                                         '${phonenumber.text}'),
+                                     content: Text(
+                                       'Please confirm if this number is correct ?',
+                                     ),
+                                     actions: [
+                                       TextButton(
+                                         onPressed: () {
+                                           Navigator.of(
+                                               context)
+                                               .pop();
+                                           setState(() {
+                                             loading =
+                                             true;
+                                             allApi
+                                                 .sendOtp(
+                                                 phonenumber.text)
+                                                 .then(
+                                                     (value) {
+                                                   value["Status"] ==
+                                                       "Success"
+                                                       ? setState(
+                                                         () {
+                                                       loading = false;
+                                                       kOTP = value["Details"];
+                                                       FocusScope.of(context).unfocus();
+                                                       Get.to(Verification(otp: kOTP! ,phonenumber: phonenumber.text,));
+                                                     },
+                                                   )
+                                                       : setState(
+                                                         () {
+                                                       loading = false;
+                                                       commonWidget.errorToast("Something Went Wrong");
+
+                                                     },
+                                                   );
+                                                 });
+                                           });
+                                         },
+                                         child: Text(
+                                             'Yes, Send OTP'),
+                                       ),
+                                       TextButton(
+                                         onPressed: () {
+                                           Navigator.of(
+                                               context)
+                                               .pop();
+                                         },
+                                         child: Text(
+                                             'Cancel'),
+                                       ),
+                                     ],
+                                   );
+                                 },
+                               );
+                             }
+
+
+
+
                             },
                             child: Text(
                               'Get Otp',
@@ -147,6 +239,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 20),
                             ),
                           ),
+
+
 
                         ),
                         SizedBox(height: 40,),

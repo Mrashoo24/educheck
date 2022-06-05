@@ -1,3 +1,4 @@
+import 'package:educheck/FormPage/formfeild.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:   LoginScreen(),
+      home:   RegisterationPage(),
       debugShowCheckedModeBanner: false,
     );
   }

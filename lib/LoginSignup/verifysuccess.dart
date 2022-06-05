@@ -23,14 +23,23 @@ class _VerifySuccessState extends State<VerifySuccess> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("asset/sticker.png"),
+                  Container(
+                    margin: EdgeInsets.only(right: 30),
+                    // color: Colors.red,
+                    width: Get.width * 0.5,
+
+                      child: ClipRRect(child: Image.asset("asset/sticker.png",fit: BoxFit.fill,))
+                  ),
                   Text("Verification",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 35),),
                   Text("Success",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 35),),
                   SizedBox(height: 80,),
 
                   InkWell(
                     onTap: () {
-                      Get.to(FormPage());
+
+
+
+                      Get.to(RegisterationPage());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

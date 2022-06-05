@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:educheck/PartnersDboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -642,9 +643,9 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               allApi
                                   .getIdRef(number.text)
                                   .then((value) {
-                                // Get.offAll(
-                                //   UserProfile(),
-                                // );
+                                Get.offAll(
+                                  DashBoard(userName:name.text),
+                                );
                               });
 
                               //END Pressed

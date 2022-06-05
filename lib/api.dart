@@ -92,12 +92,12 @@ class AllApi {
     print('userrefGetResponse: ${response.body}');
 
     var response1 = await getUsers(phone);
-    var response2 = await getUsersPhone(phone);
+    // var response2 = await getUsersPhone(phone);
 
     var thirdMap = {
       jsonEncode(model),
-      jsonEncode(response1),
-      jsonEncode(response2),
+       jsonEncode(response1),
+      // jsonEncode(response2),
     };
 
     return updateLocalUsers(thirdMap.toList());
@@ -171,8 +171,8 @@ class AllApi {
     var a = pref.getStringList("userData");
     print('ausedata $a');
     Map<String,dynamic> jsonid = await jsonDecode(a![0]);
+    Map<String,dynamic> jsonuser = await jsonDecode(a![1]);
 
-    Map<String,dynamic> jsonuser = await jsonDecode(a[1]);
 
     // print("allusersJson  ${json}");
 
@@ -182,11 +182,13 @@ class AllApi {
 
     newList.add(userid);
 
+
     UserModel userdetail = await UserModel().fromJson(jsonuser);
 
     newList.add(userdetail);
 
-    print("allusers ${newList[0].user_mo_num} ${newList[1].user_name}");
+
+    print("allusers ${newList[0].user_mo_num}");
 
     //
 
@@ -294,19 +296,19 @@ class AllApi {
 
     // to add the details in phone database
     var phonePostUrl = Uri.parse("${conurl}phonepost");
-    var phonePostResponse = await http.post(phonePostUrl, body: {
-      'reference_id': body.user_mo_num,
-      'Operating_sys': body.Operating_sys,
-      'Screen_size_id': body.Screen_size_id,
-      'Screen_reso_id': body.Screen_reso_id,
-    }).then((value) {
-
-
-      print('phonePostResponse.body: ${value.body}');
-      // Get.off(UserProfile(
-      //   phone: body.user_mo_num,
-      // ));
-    });
+    // var phonePostResponse = await http.post(phonePostUrl, body: {
+    //   'reference_id': body.user_mo_num,
+    //   'Operating_sys': body.Operating_sys,
+    //   'Screen_size_id': body.Screen_size_id,
+    //   'Screen_reso_id': body.Screen_reso_id,
+    // }).then((value) {
+    //
+    //
+    //   print('phonePostResponse.body: ${value.body}');
+    //   // Get.off(UserProfile(
+    //   //   phone: body.user_mo_num,
+    //   // ));
+    // });
 
 
 

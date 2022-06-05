@@ -1,12 +1,15 @@
+import 'package:educheck/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Constants/constant.dart';
+import '../Model/userModel.dart';
 
 class DashBoard extends StatefulWidget {
-  const DashBoard({Key? key}) : super(key: key);
+ final String userName ;
+  const DashBoard({Key? key, required this.userName}) : super(key: key);
 
   @override
   State<DashBoard> createState() => _DashBoardState();
@@ -158,162 +161,92 @@ SizedBox(height: 10),
           ],
 
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding:  EdgeInsets.only(left: 15,right: 15,top: 8),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(left: 10,right: 10),
-                  child: Container(
-                    width: Get.width,
-                    child: Row(
+        body: FutureBuilder<List<UserModel>>(
+          future: AllApi().getLocalUsers(),
+          builder: (context, snapshot) {
 
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children:[ CircleAvatar(
-                            radius: 25,
-                            child: ClipRect(
-                              child: Image.asset('asset/profilepic.png',width: 50,fit: BoxFit.fill,),
-                            ),
-                          ),
-                          Padding(
-                            padding:   EdgeInsets.only(top: 38,left: 30),
-                            child: CircleAvatar(radius: 8,backgroundColor: kgreen),
-                          )
-                          ]
-                        ),
-                        SizedBox(width: 10,),
-                        Column(
+
+            if(!snapshot.hasData){
+              return kprogressbar;
+            }
+            var doc = snapshot.requireData;
+            return SingleChildScrollView(
+              child: Padding(
+                padding:  EdgeInsets.only(left: 15,right: 15,top: 8),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.only(left: 10,right: 10),
+                      child: Container(
+                        width: Get.width,
+                        child: Row(
+
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Hey pankaj",
-                              style:
-                              TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                            Stack(
+                              children:[ CircleAvatar(
+                                radius: 25,
+                                child: ClipRect(
+                                  child: Image.asset('asset/profilepic.png',width: 50,fit: BoxFit.fill,),
+                                ),
+                              ),
+                              Padding(
+                                padding:   EdgeInsets.only(top: 38,left: 30),
+                                child: CircleAvatar(radius: 8,backgroundColor: kgreen),
+                              )
+                              ]
                             ),
-                            Row(
-
+                            SizedBox(width: 10,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Let's Explore",
-                                  style: TextStyle(fontSize: 12),
-                                ),SizedBox(width: 50,),
-                                Icon(Icons.star,color: Colors.orange,size: 40,),
-                                Icon(Icons.star,color: Colors.orange,size: 40,),
-                                Icon(Icons.star,color: Colors.orange,size: 40,)
+                                  "Hey ${widget.userName}",
+                                  style:
+                                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
+                                Row(
+
+                                  children: [
+                                    Text(
+                                      "Let's Explore",
+                                      style: TextStyle(fontSize: 12),
+                                    ),SizedBox(width: 50,),
+                                    Icon(Icons.star,color: Colors.orange,size: 40,),
+                                    Icon(Icons.star,color: Colors.orange,size: 40,),
+                                    Icon(Icons.star,color: Colors.orange,size: 40,)
+
+                                  ],
+                                ),
+
 
                               ],
                             ),
+                            // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,),
+                            // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,),
+                            // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,)
 
 
+
+                            // Image(image: AssetImage("asset/Group 10787.png"))
                           ],
-                        ),
-                        // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,),
-                        // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,),
-                        // Icon(Icons.star,color: Colors.deepOrangeAccent,size: 40,)
-
-
-
-                        // Image(image: AssetImage("asset/Group 10787.png"))
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Upcoming assessments",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        "View All",
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 15,
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: 30,
-                            width: 50,
-                            child: Center(
-                                child: Text(
-                                  "ALL",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                            decoration: BoxDecoration(
-                              color: kgreen,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Category('Categoty 1'),
-                        Category('Categoty 2'),
-                        Category('Categoty 3'),
-                        Category('Categoty 4'),
-
-
-                      ],
+                    SizedBox(
+                      height: 15,
                     ),
-                  ),
-                ),
-                SizedBox(height: 15,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-
-                  child: Row(
-
-                    children: [
-                      Singelproduct("Accounting",''),
-                      SizedBox(width: 5,),
-                      Singelproduct("Management",''),SizedBox(width: 5,),
-                      Singelproduct("School",''),SizedBox(width: 5,),
-                      // Singelproduct("Accounting"),
-                      // SizedBox(width: 5,),
-                      // Singelproduct("Management"),SizedBox(width: 5,),
-                      // Singelproduct("Accounting"),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Partner",
+                          "Upcoming assessments",
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
+
                         InkWell(
                           onTap: () {},
                           child: Text(
@@ -324,220 +257,301 @@ SizedBox(height: 10),
                             ),
                           ),
                         ),
-
-
                       ],
                     ),
-                    Text("Network"),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                SingleChildScrollView(scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: 30,
-                          width: 50,
-                          child: Center(
-                              child: Text(
-                                "ALL",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                          decoration: BoxDecoration(
-                            color: kgreen,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Category('Gold'),
-                      Category('Prime'),
-                      Category('Connected'),
-                      Category('Candidate'),
-
-
-                    ],
-                  ),
-                ),
-
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-
-                  child: Row(
-
-                    children: [
-                      Ratecards("ABC & Co","Prime"),
-                      SizedBox(width: 5,),
-
-                      Ratecards("XYZ & Co","Connect"),
-                      SizedBox(width: 5,),
-
-                      Ratecards("ABC & Co","Connect"),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 20,),
-                Padding(
-                  padding:   EdgeInsets.only(left: 30,right: 30),
-                  child: Container(
-                    width: Get.width,
-
-
-                    child: Padding(
-                      padding:  EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding:  EdgeInsets.only(left: 25),
-                                child: Text(
-                                  "Total Partners: ",
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SingleChildScrollView(scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                height: 30,
+                                width: 50,
+                                child: Center(
+                                    child: Text(
+                                      "ALL",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                decoration: BoxDecoration(
+                                  color: kgreen,
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
-                              Text(
-                                "1364",
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          Theme(
-                            data : Theme.of(context).copyWith(
-                              dividerColor:  ktextcolor
                             ),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Category('Categoty 1'),
+                            Category('Categoty 2'),
+                            Category('Categoty 3'),
+                            Category('Categoty 4'),
 
-                                child: DataTable(columns:[
-                          DataColumn(label: Text("Partners"),),
-                          DataColumn(label: Text("Total"),),
-                          DataColumn(label: Text("Total"),),
 
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
 
+                      child: Row(
 
-                        ],
-                        rows: [
-                          DataRow(cells: [
-                          DataCell(Text("Prime Partner")),
-                          DataCell(Text("15")),
-                          DataCell(Text("")),
-                          ]),
-                          DataRow(cells: [
-                          DataCell(Text("Connect Partner")),
-                          DataCell(Text("300")),
-                          DataCell(Text("")),
-                          ]),
-                          DataRow(cells: [
-                          DataCell(Text("Assessments")),
-                          DataCell(Text("500")),
-                          DataCell(Text("300")),
-                          ]),
-                          DataRow(cells: [
-                          DataCell(Text("Assessments")),
-                          DataCell(Text("500")),
-                          DataCell(Text("300")),
-                          ])
-                        ],),
-                              ),
-                          ),
-
+                        children: [
+                          Singelproduct("Accounting",''),
+                          SizedBox(width: 5,),
+                          Singelproduct("Management",''),SizedBox(width: 5,),
+                          Singelproduct("School",''),SizedBox(width: 5,),
+                          // Singelproduct("Accounting"),
+                          // SizedBox(width: 5,),
+                          // Singelproduct("Management"),SizedBox(width: 5,),
+                          // Singelproduct("Accounting"),
                         ],
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      // border: Border.all(width: 1, color: ktextcolor),
-                      color: ktextcolor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
 
-
-                SizedBox(height: 20),
-                Row(
-                  children: [
+                    SizedBox(height: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-
                       children: [
-                        Text(
-                          "Exclusive",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text("Offers"),
-                        SizedBox(height: 10,),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 30,
-                                  width: 50,
-                                  child: Center(
-                                      child: Text(
-                                        "ALL",
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                  decoration: BoxDecoration(
-                                    color: kgreen,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Partner",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Text(
+                                "View All",
+                                style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 15,
                                 ),
                               ),
-                              SizedBox(
-                                width: 5,
+                            ),
+
+
+                          ],
+                        ),
+                        Text("Network"),
+                      ],
+                    ),
+                    SizedBox(height: 10,),
+                    SingleChildScrollView(scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 30,
+                              width: 50,
+                              child: Center(
+                                  child: Text(
+                                    "ALL",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                              decoration: BoxDecoration(
+                                color: kgreen,
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              Category('Exclusive'),
-                              Category('Ongoing'),
-                              Category('Limited'),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Category('Gold'),
+                          Category('Prime'),
+                          Category('Connected'),
+                          Category('Candidate'),
+
+
+                        ],
+                      ),
+                    ),
+
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+
+                      child: Row(
+
+                        children: [
+                          Ratecards("ABC & Co","Prime"),
+                          SizedBox(width: 5,),
+
+                          Ratecards("XYZ & Co","Connect"),
+                          SizedBox(width: 5,),
+
+                          Ratecards("ABC & Co","Connect"),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding:   EdgeInsets.only(left: 30,right: 30),
+                      child: Container(
+                        width: Get.width,
+
+
+                        child: Padding(
+                          padding:  EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding:  EdgeInsets.only(left: 25),
+                                    child: Text(
+                                      "Total Partners: ",
+                                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Text(
+                                    "1364",
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              Theme(
+                                data : Theme.of(context).copyWith(
+                                  dividerColor:  ktextcolor
+                                ),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+
+                                    child: DataTable(columns:[
+                              DataColumn(label: Text("Partners"),),
+                              DataColumn(label: Text("Total"),),
+                              DataColumn(label: Text("Total"),),
+
+
+
+                            ],
+                            rows: [
+                              DataRow(cells: [
+                              DataCell(Text("Prime Partner")),
+                              DataCell(Text("15")),
+                              DataCell(Text("")),
+                              ]),
+                              DataRow(cells: [
+                              DataCell(Text("Connect Partner")),
+                              DataCell(Text("300")),
+                              DataCell(Text("")),
+                              ]),
+                              DataRow(cells: [
+                              DataCell(Text("Assessments")),
+                              DataCell(Text("500")),
+                              DataCell(Text("300")),
+                              ]),
+                              DataRow(cells: [
+                              DataCell(Text("Assessments")),
+                              DataCell(Text("500")),
+                              DataCell(Text("300")),
+                              ])
+                            ],),
+                                  ),
+                              ),
 
                             ],
                           ),
                         ),
+                        decoration: BoxDecoration(
+                          // border: Border.all(width: 1, color: ktextcolor),
+                          color: ktextcolor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+
+
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Text(
+                              "Exclusive",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            Text("Offers"),
+                            SizedBox(height: 10,),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      height: 30,
+                                      width: 50,
+                                      child: Center(
+                                          child: Text(
+                                            "ALL",
+                                            style: TextStyle(color: Colors.white),
+                                          )),
+                                      decoration: BoxDecoration(
+                                        color: kgreen,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Category('Exclusive'),
+                                  Category('Ongoing'),
+                                  Category('Limited'),
+
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Singelproduct("Keychain","Metal"),
+                          SizedBox(width: 5,),
+                          Singelproduct("Keychain","Leather"),SizedBox(width: 5,),
+
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+
+                    Row(
+                      children: [
+                        Text(
+                          "Available Point Balance: ",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+
+                        Text(
+                          "3,43200",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 40),
+
+
                   ],
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Singelproduct("Keychain","Metal"),
-                      SizedBox(width: 5,),
-                      Singelproduct("Keychain","Leather"),SizedBox(width: 5,),
-
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                Row(
-                  children: [
-                    Text(
-                      "Available Point Balance: ",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-
-                    Text(
-                      "3,43200",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 40),
-
-
-              ],
-            ),
-          ),
+              ),
+            );
+          }
         ),
       ),
     );

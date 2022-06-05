@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'LoginSignup/loginscreen.dart';
+import 'PartnerPerformance/partnerperformance.dart';
+import 'PartnersDboard/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:   LoginScreen(),
+      home:   DashBoard(),
       debugShowCheckedModeBanner: false,
     );
   }

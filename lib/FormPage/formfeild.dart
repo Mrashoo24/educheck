@@ -443,11 +443,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "GST Number(optional)*",
-                      )),
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       "GST Number(optional)*",
+                  //     )),
                   SizedBox(
                     height: 5,
                   ),
@@ -455,21 +455,15 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Have you been reffered to us by someone*",
-                        style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                      )),
+
                   SizedBox(
                     height: 30,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Name*",
-                      )),
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       "Name*",
+                  //     )),
                   SizedBox(
                     height: 10,
                   ),
@@ -477,11 +471,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Mobile Number*",
-                      )),
+
                   SizedBox(
                     height: 5,
                   ),

@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 5,
                             ),
                             Text(
-                              "Singup",
+                              "SignUp",
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold),
                             ),

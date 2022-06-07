@@ -135,31 +135,26 @@ SizedBox(height: 10),
 
           elevation: 0,
         ),
-        bottomNavigationBar : BottomNavigationBar(
-          items:   <BottomNavigationBarItem>[
-            // BottomNavigationBarItem(
-            //   icon:Image.asset("asset/bhome.png"),
-            //   label: 'Home',
-            //   backgroundColor: Colors.white,
-            // ),
-            BottomNavigationBarItem(
-              icon: Image.asset("asset/bhome.png"),
-              label: '',
-              backgroundColor: Colors.green,
-            ),
-
-            BottomNavigationBarItem(
-              icon:Image.asset("asset/bhome.png"),
-              label: 'School',
-              backgroundColor: Colors.purple,
-            ),
-            BottomNavigationBarItem(
-              icon:Image.asset("asset/bhome.png"),
-              label: 'Settings',
-              backgroundColor: Colors.pink,
-            ),
-          ],
-
+        bottomNavigationBar : Padding(
+          padding:   EdgeInsets.only(left: 15,right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Image.asset("asset/bhome.png"),
+                height: 50,
+              ),Container(
+                child: Image.asset("asset/navigate.png"),
+                height: 50,
+              ),Container(
+                child: Image.asset("asset/message.png"),
+                height: 50,
+              ),Container(
+                child: Image.asset("asset/cart.png"),
+                height: 50,
+              )
+            ],
+          ),
         ),
         body: FutureBuilder<List<UserModel>>(
           future: AllApi().getLocalUsers(),

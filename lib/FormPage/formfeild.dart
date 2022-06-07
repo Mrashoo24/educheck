@@ -82,6 +82,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
   }
 
 
+  var _value = 1;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -257,11 +258,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "ID Proof",
-                      )),
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       "ID Proof",
+                  //     )),
                   SizedBox(
                     height: 5,
                   ),
@@ -350,11 +351,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Pan Card",
-                      )),
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       "Pan Card",
+                  //     )),
                   SizedBox(
                     height: 5,
                   ),
@@ -455,15 +456,47 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 20,
                   ),
-
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Have you been reffered to us by someone ?",
+                        style:
+                            TextStyle(fontSize: 15),
+                      )),
                   SizedBox(
-                    height: 30,
+                    height: 5,
                   ),
                   // Align(
                   //     alignment: Alignment.centerLeft,
                   //     child: Text(
                   //       "Name*",
-                  //     )),
+                  //
+                  Row(
+                    children: [
+                      Radio(
+                          activeColor: kgreen ,
+                          value: 1, groupValue: _value, onChanged: (value){
+                        setState(() {
+                          _value = 1;
+                        });
+                      }),
+                      Text("Yes")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                          activeColor: kgreen ,
+
+                          value: 2, groupValue: _value, onChanged: (va){
+                        setState(() {
+                          _value = 2;
+                        });
+                      }),
+                      Text("No")
+                    ],
+                  ),
+
                   SizedBox(
                     height: 10,
                   ),
@@ -471,7 +504,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 10,
                   ),
-
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       "Mobile Number*",
+                  //     )),
                   SizedBox(
                     height: 5,
                   ),

@@ -130,19 +130,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               }
                             },
+                            
                             controller: phonenumber,
                               decoration: InputDecoration(
                                 fillColor: Colors.grey[50],
                                 filled: true,
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color:ktextcolor)),
-                                // border: OutlineInputBorder(
-                                //   borderRadius: BorderRadius.circular(10),
-                                //   borderSide: BorderSide(color: ktextcolor),
-                                //
-                                // ),
-                                border: InputBorder.none,
 
+                                border: InputBorder.none,
                                 hintText: ("Mobile number"),
                                 hintStyle: TextStyle(color: Colors.grey),
                                 contentPadding: EdgeInsets.all(10),
@@ -226,10 +222,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                  },
                                );
                              }
-
-
-
-
                             },
                             child: Text(
                               'Get Otp',
@@ -239,13 +231,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 20),
                             ),
                           ),
-
-
-
                         ),
+
                         SizedBox(height: 40,),
+
                         Text(
-                          "By continuing, I agree to the Terms of Use & Privacy",
+                          "By continue, I agree to the Terms of Use & Privacy",
                           style: TextStyle(color: Colors.grey),
                         ),Text(
                           "Policy",

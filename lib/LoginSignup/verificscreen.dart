@@ -60,7 +60,7 @@ class _VerificationState extends State<Verification> {
                 ),
                 SizedBox(height: 50,),
                 Container(
-                  // height: Get.height*0.7,
+                  height: Get.height*0.9,
                   child: Padding(
                     padding:  EdgeInsets.only(left: 20.0,right: 20),
                     child: Column(
@@ -280,7 +280,7 @@ class _VerificationState extends State<Verification> {
 
                         SizedBox(height: 40,),
                         Text(
-                          "By continuing, I agree to the Terms of Use & Privacy",
+                          "By continue, I agree to the Terms of Use & Privacy",
                           style: TextStyle(color: Colors.grey),
                         ),
                         Text(

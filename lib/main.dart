@@ -1,6 +1,10 @@
+import 'package:educheck/Constants/constant.dart';
 import 'package:educheck/FormPage/formfeild.dart';
+import 'package:educheck/Model/userModel.dart';
+import 'package:educheck/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'LoginSignup/loginscreen.dart';
 import 'PartnerPerformance/partnerperformance.dart';
@@ -30,7 +34,32 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:   LoginScreen(),
+      home:   FutureBuilder<List>(
+        future: Future.wait([SharedPreferences.getInstance()]),
+        builder: (context, snapshot) {
+          if(!snapshot.hasData){
+            return kprogressbar;
+          }
+
+         List a = snapshot.requireData;
+
+          bool? loggedin = a[0].getBool('isLoggedInKey');
+
+
+
+
+          return  loggedin != null  ? FutureBuilder<List<UserModel>>(
+            future: AllApi().getLocalUsers(),
+            builder: (context, usersnapshot) {
+              if(!usersnapshot.hasData){
+                return kprogressbar;
+              }
+              UserModel users = usersnapshot.requireData[1];
+              return DashBoard(userName: users.user_name!);
+            }
+          )  :LoginScreen();
+        }
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

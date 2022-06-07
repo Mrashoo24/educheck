@@ -253,7 +253,7 @@ class _VerificationState extends State<Verification> {
                               //       ))
                                   : print("less");
 
-                              Get.to(VerifySuccess());
+                              Get.to(VerifySuccess(phoneNumber: widget.phonenumber,));
                             },
                             child: Text(
                               'Verify',

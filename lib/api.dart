@@ -10,7 +10,7 @@ class AllApi {
   Future<dynamic> sendOtp(String phone) async {
 
     var url = Uri.parse(
-        "https://2factor.in/API/V1/$smsApikey/SMS/+91$phone/AUTOGEN/otp_new"
+        "https://2factor.in/API/V1/$smsApikey/SMS/+91$phone/AUTOGEN/educheck_otp"
     );
 
     var response = await http.get(url);
@@ -94,11 +94,11 @@ class AllApi {
     var response1 = await getUsers(phone);
     // var response2 = await getUsersPhone(phone);
 
-    var thirdMap = {
+    var thirdMap = [
       jsonEncode(model),
        jsonEncode(response1),
       // jsonEncode(response2),
-    };
+    ];
 
     return updateLocalUsers(thirdMap.toList());
   }
@@ -171,7 +171,7 @@ class AllApi {
     var a = pref.getStringList("userData");
     print('ausedata $a');
     Map<String,dynamic> jsonid = await jsonDecode(a![0]);
-    Map<String,dynamic> jsonuser = await jsonDecode(a![1]);
+    Map<String,dynamic> jsonuser = await jsonDecode(a[1]);
 
 
     // print("allusersJson  ${json}");
@@ -188,7 +188,7 @@ class AllApi {
     newList.add(userdetail);
 
 
-    print("allusers ${newList[0].user_mo_num}");
+    print("allusers ${newList[1].user_name}");
 
     //
 

@@ -13,7 +13,8 @@ import '../Constants/constant.dart';
 import '../Model/userModel.dart';
 
 class RegisterationPage extends StatefulWidget {
-  const RegisterationPage({Key? key}) : super(key: key);
+  final String phoneNumber ;
+  const RegisterationPage({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<RegisterationPage> createState() => _RegisterationPageState();
@@ -81,6 +82,13 @@ class _RegisterationPageState extends State<RegisterationPage> {
     }
   }
 
+  @override
+  void initState() {
+    setState(() {
+      number = TextEditingController(text: widget.phoneNumber);
+    });
+    super.initState();
+  }
 
   var _value = 1;
   @override
@@ -269,39 +277,55 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   InkWell(
                     onTap: (){
                       Get.defaultDialog(
-                        title: '',
-                        content: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    child: ElevatedButton(onPressed: (){
-                                      _imagePicker(ImageSource.camera);
-                                    }, child: Text('SELECT FROM CAMERA',style: TextStyle(color: Colors.black),),
-                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-
+                          title: 'SELECT IMAGE',
+                          titleStyle: TextStyle(fontSize: 18,fontWeight: FontWeight.w300),
+                          content:
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap:(){
+                                        _imagePicker(ImageSource.camera);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(15),
+                                        child: Row(
+                                          children: [
+                                            Icon(CupertinoIcons.camera_fill,size: 16,),
+                                            SizedBox(width: 15,),
+                                            Text('Take from camera',style: TextStyle(color: Colors.black,fontSize: 16),),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    child: ElevatedButton(onPressed: (){
-                                      _imagePicker(ImageSource.gallery);
-                                    }, child: Text('SELECT FROM GALLERY',style: TextStyle(color: Colors.black),),
-                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap:(){
+                                        _imagePicker(ImageSource.gallery);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(15),
+                                        child: Row(
+                                          children: [
+                                            Icon(CupertinoIcons.photo_fill_on_rectangle_fill,size: 16,),
+                                            SizedBox(width: 15,),
+                                            Text('Upload from gallery',style: TextStyle(color: Colors.black,fontSize: 16),),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
+                                ],
+                              )
+                            ],
+                          )
                       );
                     },
                     child: Container(
@@ -320,8 +344,8 @@ class _RegisterationPageState extends State<RegisterationPage> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey.shade200,
-                              contentPadding:
-                                  EdgeInsets.only(left: 10, top: 15, bottom: 10),
+                              // contentPadding:
+                              //     EdgeInsets.only(left: 10, top: 15, bottom: 10),
                               hintText: 'Choose file',
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 15),
@@ -362,18 +386,27 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   InkWell(
                     onTap: (){
                       Get.defaultDialog(
-                          title: '',
-                          content: Column(
+                          titleStyle: TextStyle(fontSize: 18,fontWeight: FontWeight.w300),
+                          title: 'SELECT IMAGE',
+                          content:
+                          Column(
                             children: [
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Container(
-                                      child: ElevatedButton(onPressed: (){
-                                        _panimagePicker(ImageSource.camera);
-                                      }, child: Text('SELECT FROM CAMERA',style: TextStyle(color: Colors.black),),
-                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-
+                                    child: InkWell(
+                                      onTap:(){
+                      _panimagePicker(ImageSource.camera);
+                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(15),
+                                        child: Row(
+                                          children: [
+                                            Icon(CupertinoIcons.camera_fill,size: 16,),
+                                            SizedBox(width: 15,),
+                                            Text('Take from camera',style: TextStyle(color: Colors.black,fontSize: 16),),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -382,12 +415,19 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Container(
-                                      child: ElevatedButton(onPressed: (){
+                                    child: InkWell(
+                                      onTap:(){
                                         _panimagePicker(ImageSource.gallery);
-                                      }, child: Text('SELECT FROM GALLERY',style: TextStyle(color: Colors.black),),
-                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(15),
+                                        child: Row(
+                                          children: [
+                                            Icon(CupertinoIcons.photo_fill_on_rectangle_fill,size: 16,),
+                                            SizedBox(width: 15,),
+                                            Text('Upload from gallery',style: TextStyle(color: Colors.black,fontSize: 16),),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -413,8 +453,8 @@ class _RegisterationPageState extends State<RegisterationPage> {
                                 decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.grey.shade200,
-                                    contentPadding:
-                                    EdgeInsets.only(left: 10, top: 15, bottom: 10),
+                                    // contentPadding:
+                                    // EdgeInsets.only(left: 10, top: 15, bottom: 10),
                                     hintText: 'Choose file',
                                     hintStyle:
                                     TextStyle(color: Colors.black, fontSize: 15),
@@ -500,7 +540,10 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  buildTextForm('Enter Name', referName),
+                  Visibility(
+                      visible: _value == 1,
+                      child: buildTextForm('Enter Name', referName)),
+
                   SizedBox(
                     height: 10,
                   ),
@@ -512,7 +555,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
                   SizedBox(
                     height: 5,
                   ),
-                  buildTextForm('Enter Number', referNumber),
+
+                  Visibility(
+                    visible: _value == 1,
+                    child: buildTextForm('Enter Number', referNumber),),
+
                   SizedBox(height: 30,),
 
                   loading ? kprogressbar  :   Container(
@@ -681,9 +728,6 @@ class _RegisterationPageState extends State<RegisterationPage> {
 
 
 
-
-
-
                           }
 
 
@@ -694,7 +738,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
 
                       },
                       child: Text(
-                        'Get Otp',
+                        'Sign Up',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -717,6 +761,8 @@ class _RegisterationPageState extends State<RegisterationPage> {
   buildTextForm(title, controller) {
     return TextFormField(
       controller: controller,
+      enabled: title == 'Mobile Number'  ? false : true,
+      keyboardType: title == 'Enter Pin Code' ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         fillColor: Colors.grey[50],
         filled: true,

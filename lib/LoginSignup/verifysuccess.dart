@@ -6,7 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 import '../FormPage/formfeild.dart';
 
 class VerifySuccess extends StatefulWidget {
-  const VerifySuccess({Key? key}) : super(key: key);
+ final String phoneNumber;
+  const VerifySuccess({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<VerifySuccess> createState() => _VerifySuccessState();
@@ -39,7 +40,7 @@ class _VerifySuccessState extends State<VerifySuccess> {
 
 
 
-                      Get.to(RegisterationPage());
+                      Get.to(RegisterationPage(phoneNumber: widget.phoneNumber,));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

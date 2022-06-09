@@ -57,7 +57,8 @@ class MyApp extends StatelessWidget {
               UserModel users = usersnapshot.requireData[1];
               return DashBoard(userName: users.user_name!);
             }
-          )  :LoginScreen();
+          )
+              :LoginScreen();
         }
       ),
       debugShowCheckedModeBanner: false,

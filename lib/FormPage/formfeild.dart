@@ -59,6 +59,8 @@ class _RegisterationPageState extends State<RegisterationPage> {
       setState(() {
         this.image = imageTemporary;
       });
+      Get.back();
+
       return imageTemporary;
     } on PlatformException catch (e) {
       ScaffoldMessenger.of(context)
@@ -76,6 +78,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
       setState(() {
         panimage = imageTemporary;
       });
+      Get.back();
       return imageTemporary;
     } on PlatformException catch (e) {
       ScaffoldMessenger.of(context)
@@ -329,49 +332,20 @@ class _RegisterationPageState extends State<RegisterationPage> {
                           )
                       );
                     },
-                    child: Container(
-                      width: Get.width,
+                    child:  TextFormField(
+                  decoration: InputDecoration(
+                  fillColor: Colors.grey[50],
+                    filled: true,counterText: "",
+                    enabled: false,
+                    focusedBorder:
+                    OutlineInputBorder(borderSide: BorderSide(color: ktextcolor)),
+                    border: InputBorder.none,
+                    hintText:      image == null ? "Upload Id proof" : path.basename(image!.path),
 
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex:4,
-                              child: TextFormField(
-                                enabled: false,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey.shade200,
-                              // contentPadding:
-                              //     EdgeInsets.only(left: 10, top: 15, bottom: 10),
-                              hintText: 'Choose file',
-                              hintStyle:
-                                  TextStyle(color: Colors.black, fontSize: 15),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide: BorderSide(color: Colors.transparent)
-                              )
-                            ),
-                          )),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            flex: 8,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 100.0),
-                              child: Text(
-                                image == null ? "No file chosen" : path.basename(image!.path),
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    contentPadding: EdgeInsets.all(10),
+                  ),
+          ),
                   ),
                   SizedBox(
                     height: 20,
@@ -438,47 +412,18 @@ class _RegisterationPageState extends State<RegisterationPage> {
                           )
                       );
                     },
-                    child: Container(
-                      width: Get.width,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        fillColor: Colors.grey[50],
+                        filled: true,counterText: "",
+                        enabled: false,
+                        focusedBorder:
+                        OutlineInputBorder(borderSide: BorderSide(color: ktextcolor)),
+                        border: InputBorder.none,
+                        hintText:      panimage == null ? "Upload Pan card" : path.basename(panimage!.path),
 
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              flex:4,
-                              child: TextFormField(
-                                enabled: false,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.grey.shade200,
-                                    // contentPadding:
-                                    // EdgeInsets.only(left: 10, top: 15, bottom: 10),
-                                    hintText: 'Choose file',
-                                    hintStyle:
-                                    TextStyle(color: Colors.black, fontSize: 15),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                        borderSide: BorderSide(color: Colors.transparent)
-                                    )
-                                ),
-                              )),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            flex: 8,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 100.0),
-                              child: Text(
-                                panimage == null ? "No file chosen" : path.basename(panimage!.path),
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                          )
-                        ],
+                        hintStyle: TextStyle(color: Colors.grey),
+                        contentPadding: EdgeInsets.all(10),
                       ),
                     ),
                   ),
@@ -567,14 +512,16 @@ class _RegisterationPageState extends State<RegisterationPage> {
                     width: Get.width,
                     height: 50,
 
-                    child: ElevatedButton(
+                    child:
+
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: kgreen,
                         padding: EdgeInsets.all(6),
                       ),
                       onPressed: () async {
                         print('clicked');
-                     if(false) {
+                     if(_formKey.currentState!.validate() || image == null || panimage == null) {
 
                      }   else{
 
@@ -764,10 +711,11 @@ class _RegisterationPageState extends State<RegisterationPage> {
     return TextFormField(
       controller: controller,
       enabled: title == 'Mobile Number'  ? false : true,
-      keyboardType: title == 'Enter Pin Code' ? TextInputType.number : TextInputType.text,
+      keyboardType: title == 'Enter Pin Code' || title == 'Enter Number' ? TextInputType.number : TextInputType.text,
+      maxLength: title == 'Enter Pin Code' ? 6 :  title == 'Enter Number' ? 10 : 30,
       decoration: InputDecoration(
         fillColor: Colors.grey[50],
-        filled: true,
+        filled: true,counterText: "",
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: ktextcolor)),
         border: InputBorder.none,
@@ -775,6 +723,15 @@ class _RegisterationPageState extends State<RegisterationPage> {
         hintStyle: TextStyle(color: Colors.grey),
         contentPadding: EdgeInsets.all(10),
       ),
+      validator: (value){
+        if(title == 'Enter Name' || title == 'Enter Number'){
+          return null;
+        }else{
+          if(value!.isEmpty){
+            return 'Field is mandatory';
+          }
+        }
+      },
     );
   }
 }

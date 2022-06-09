@@ -101,9 +101,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         SizedBox(height: 10,),
-                        Text(
-                          "We will send One Time Password to this mobile phone",
-                          style: TextStyle(color: Colors.grey ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "We will send One Time Password to this mobile phone",
+                              style: TextStyle(color: Colors.grey ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 40,
@@ -111,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Form(
                           key:_formKey,
                           child: TextFormField(
+                            maxLength: 10,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
@@ -133,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             
                             controller: phonenumber,
                               decoration: InputDecoration(
+                                counterText: "",
                                 fillColor: Colors.grey[50],
                                 filled: true,
                                 focusedBorder: OutlineInputBorder(
@@ -224,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                              }
                             },
                             child: Text(
-                              'Get Otp',
+                              'GET OTP',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

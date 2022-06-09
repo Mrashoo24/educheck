@@ -715,13 +715,14 @@ class _RegisterationPageState extends State<RegisterationPage> {
                               setState(() {
                                 loading = false;
                               });
-                              allApi
-                                  .getIdRef(number.text)
-                                  .then((value) {
-                                Get.offAll(
+                              // allApi
+                              //     .getIdRef(number.text)
+                              //     .then((value) {
+                                Get.to(
                                   DashBoard(userName:name.text),
                                 );
-                              });
+                              // }
+
 
                               //END Pressed
 

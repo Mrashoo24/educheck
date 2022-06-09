@@ -1,3 +1,4 @@
+import 'package:educheck/PartnersDboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,9 @@ import '../FormPage/formfeild.dart';
 
 class VerifySuccess extends StatefulWidget {
  final String phoneNumber;
-  const VerifySuccess({Key? key, required this.phoneNumber}) : super(key: key);
+ final bool userLoggedIn;
+ final String userName ;
+  const VerifySuccess({Key? key, required this.phoneNumber, required this.userLoggedIn, required this.userName}) : super(key: key);
 
   @override
   State<VerifySuccess> createState() => _VerifySuccessState();
@@ -40,7 +43,10 @@ class _VerifySuccessState extends State<VerifySuccess> {
 
 
 
-                      Get.to(RegisterationPage(phoneNumber: widget.phoneNumber,));
+                widget.userLoggedIn ?
+                    Get.to(DashBoard(userName: widget.userName))
+                    :       Get.to(RegisterationPage(phoneNumber: widget.phoneNumber,));
+
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -176,7 +176,11 @@ class _VerificationState extends State<Verification> {
 
 
                                               if (value == "\"0\"") {
-                                                loading = false;
+                                                setState(() {
+                                                  loading = false;
+
+                                                });
+                                                Get.to(VerifySuccess(phoneNumber: widget.phonenumber,userLoggedIn:false, userName: '',));
 
                                                 // Get.offAll(RegisterationPage(
                                                 //   // title: "Registeration",
@@ -193,7 +197,7 @@ class _VerificationState extends State<Verification> {
                                                     loading = false;
                                                   });
 
-                                                  // Get.offAll(UserProfile());
+                                                  Get.to(VerifySuccess(phoneNumber: widget.phonenumber,userLoggedIn:true, userName: value[1].user_name ?? 'Arsalan',));
 
                                                 });
 
@@ -253,7 +257,6 @@ class _VerificationState extends State<Verification> {
                               //       ))
                                   : print("less");
 
-                              Get.to(VerifySuccess(phoneNumber: widget.phonenumber,));
                             },
                             child: Text(
                               'Verify',
